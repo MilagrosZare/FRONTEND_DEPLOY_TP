@@ -2,7 +2,7 @@ import { useState } from "react"
 import { ServerError } from "../../utils/error.util"
 
 export const useApiRequest = (url) => {
-    //Nos conviene guardar en el hook porque no es algo que vaya a variar entre componentes.
+    
     const initialResponseApiState = { //estado inicial
         loading: false,
         error: null,
@@ -16,11 +16,6 @@ export const useApiRequest = (url) => {
         try {
             setResponseApiState({ ...initialResponseApiState, loading: true })
 
-            //Enviar el formulario (estado) al backend.
-            //Consulta HTTP
-            //Fetch es una función que nos permite hacer consultas HTTP. Recibe la URL a consultar y un objeto de configuración. 
-            //URL: string
-            //Objeto: Object{ method, headers, body }
             const response = await fetch(
                 url,
                 {
@@ -32,7 +27,11 @@ export const useApiRequest = (url) => {
                 }
             )
 
-            const data = await response.json()
+            if (!response.ok) {
+                throw new Error(`Error ${response.status}: ${response.statusText}`);
+            }
+
+            const data = await response.json();
 
             console.log("Solicitud enviada")
 
@@ -64,11 +63,6 @@ export const useApiRequest = (url) => {
         try {
             setResponseApiState({ ...initialResponseApiState, loading: true })
 
-            //Enviar el formulario (estado) al backend.
-            //Consulta HTTP
-            //Fetch es una función que nos permite hacer consultas HTTP. Recibe la URL a consultar y un objeto de configuración. 
-            //URL: string
-            //Objeto: Object{ method, headers, body }
             const response = await fetch(
                 url,
                 {

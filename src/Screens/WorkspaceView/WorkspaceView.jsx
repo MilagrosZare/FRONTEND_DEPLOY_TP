@@ -9,7 +9,7 @@ const WorkspaceView = () => {
     useEffect(() => {
         const fetchWorkspaces = async () => {
             try {
-                const response = await fetch(`/workspaces/${userId}`);
+                const response = await fetch(`/workspaces/${user_id}`);
                 const data = await response.json();
                 if (data.success) {
                     setWorkspaces(data.workspaces);
